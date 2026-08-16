@@ -1,0 +1,12 @@
+[Unit]
+Description=Radian Hello Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/hello
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

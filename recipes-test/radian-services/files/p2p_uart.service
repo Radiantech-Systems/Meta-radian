@@ -1,0 +1,12 @@
+[Unit]
+Description=Radian P2P UART Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/p2p_uart
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

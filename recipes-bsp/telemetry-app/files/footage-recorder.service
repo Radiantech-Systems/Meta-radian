@@ -1,0 +1,22 @@
+# systemd unit to run the footage recorder automatically on Jetson boot,
+# as its own independent process alongside telemetry-agent.service.
+# Install:
+#   sudo cp footage-recorder.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now footage-recorder
+[Unit]
+Description=Jetson Sliced Footage Recorder
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/telemetry-app
+EnvironmentFile=/opt/telemetry-app/.env
+ExecStart=/usr/bin/python3 /opt/telemetry-app/footage_recorder.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

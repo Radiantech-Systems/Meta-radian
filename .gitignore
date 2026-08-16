@@ -1,0 +1,51 @@
+# Editor / OS files
+*~
+*.swp
+*.swo
+*.bbappend~
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary source backups
+*.save
+
+# Secrets — never commit real env files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# C/C++ build artifacts
+*.o
+*.obj
+build/
+tmp/
+video_server
+env_loader_example
+*.out
+
+# Crash dumps
+core
+*.core
+
+# Node / Vite frontend
+node_modules/
+dist/
+.cache/
+
+# Yocto / embedded image build
+sstate-cache/
+downloads/
+
+# Logs
+*.log
+
+# Project telemetry configuration
+!recipes-bsp/telemetry-app/files/.env

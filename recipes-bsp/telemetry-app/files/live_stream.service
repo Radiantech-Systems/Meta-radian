@@ -1,0 +1,23 @@
+# systemd unit to run the live camera stream server automatically on
+# Jetson boot, as its own independent process alongside telemetry-agent
+# and footage-recorder.
+# Install:
+#   sudo cp live-stream.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now live-stream
+[Unit]
+Description=Jetson Live Camera Stream (MJPEG via Flask)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/telemetry-app
+EnvironmentFile=/opt/telemetry-app/.env
+ExecStart=/usr/bin/python3 /opt/telemetry-app/live_stream_server.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Send UART Shutdown Notification
+DefaultDependencies=no
+Before=shutdown.target reboot.target halt.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/uart_notify /dev/ttyTHS1 JETSON_SHUTDOWN
+
+[Install]
+WantedBy=halt.target reboot.target shutdown.target

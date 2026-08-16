@@ -1,0 +1,11 @@
+[Unit]
+Description=Send UART Boot Notification
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/uart_notify /dev/ttyTHS1 JETSON_BOOTED
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

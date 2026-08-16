@@ -1,0 +1,129 @@
+SUMMARY = "Radian Telemetry Agent Application"
+DESCRIPTION = "Telemetry, camera, power, cooling, system monitoring and video services for Jetson"
+LICENSE = "CLOSED"
+
+SRC_URI = " \
+    file://.env \
+    file://agent.py \
+    file://collectors \
+    file://footage-recorder.service \
+    file://footage_recorder.py \
+    file://live_stream.service \
+    file://live_stream_server.py \
+    file://logger.py \
+    file://requirements.txt \
+    file://sender.py \
+    file://start-jetson.sh \
+    file://telemetry-agent.service \
+"
+
+S = "${WORKDIR}"
+
+inherit systemd
+
+SYSTEMD_PACKAGES = "${PN}"
+
+SYSTEMD_SERVICE:${PN} = " \
+    telemetry-agent.service \
+    footage-recorder.service \
+    live_stream.service \
+"
+
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
+
+do_install() {
+    # Application directory
+    install -d ${D}/opt/telemetry-app
+
+    install -m 0600 ${WORKDIR}/.env \
+    ${D}/opt/telemetry-app/.env
+
+    # Python application files
+    install -m 0755 ${WORKDIR}/agent.py \
+        ${D}/opt/telemetry-app/agent.py
+
+    install -m 0755 ${WORKDIR}/footage_recorder.py \
+        ${D}/opt/telemetry-app/footage_recorder.py
+
+    install -m 0755 ${WORKDIR}/live_stream_server.py \
+        ${D}/opt/telemetry-app/live_stream_server.py
+
+    install -m 0644 ${WORKDIR}/logger.py \
+        ${D}/opt/telemetry-app/logger.py
+
+    install -m 0755 ${WORKDIR}/sender.py \
+        ${D}/opt/telemetry-app/sender.py
+
+    install -m 0755 ${WORKDIR}/start-jetson.sh \
+        ${D}/opt/telemetry-app/start-jetson.sh
+
+    install -m 0644 ${WORKDIR}/requirements.txt \
+        ${D}/opt/telemetry-app/requirements.txt
+
+    # Collectors
+    install -d ${D}/opt/telemetry-app/collectors
+
+    install -m 0644 ${WORKDIR}/collectors/__init__.py \
+        ${D}/opt/telemetry-app/collectors/__init__.py
+
+    install -m 0644 ${WORKDIR}/collectors/camera.py \
+        ${D}/opt/telemetry-app/collectors/camera.py
+
+    install -m 0644 ${WORKDIR}/collectors/cooling.py \
+        ${D}/opt/telemetry-app/collectors/cooling.py
+
+    install -m 0644 ${WORKDIR}/collectors/cpu.py \
+        ${D}/opt/telemetry-app/collectors/cpu.py
+
+    install -m 0644 ${WORKDIR}/collectors/gpu.py \
+        ${D}/opt/telemetry-app/collectors/gpu.py
+
+    install -m 0644 ${WORKDIR}/collectors/memory.py \
+        ${D}/opt/telemetry-app/collectors/memory.py
+
+    install -m 0644 ${WORKDIR}/collectors/network.py \
+        ${D}/opt/telemetry-app/collectors/network.py
+
+    install -m 0644 ${WORKDIR}/collectors/power.py \
+        ${D}/opt/telemetry-app/collectors/power.py
+
+    install -m 0644 ${WORKDIR}/collectors/storage.py \
+        ${D}/opt/telemetry-app/collectors/storage.py
+
+    install -m 0644 ${WORKDIR}/collectors/system_info.py \
+        ${D}/opt/telemetry-app/collectors/system_info.py
+
+    install -m 0644 ${WORKDIR}/collectors/tegrastats_reader.py \
+        ${D}/opt/telemetry-app/collectors/tegrastats_reader.py
+
+    # STM32 collector
+    install -m 0644 ${WORKDIR}/collectors/stm32.py \
+        ${D}/opt/telemetry-app/collectors/stm32.py
+
+    # Systemd services
+    install -d ${D}${systemd_system_unitdir}
+
+    install -m 0644 ${WORKDIR}/telemetry-agent.service \
+        ${D}${systemd_system_unitdir}/telemetry-agent.service
+
+    install -m 0644 ${WORKDIR}/footage-recorder.service \
+        ${D}${systemd_system_unitdir}/footage-recorder.service
+
+    install -m 0644 ${WORKDIR}/live_stream.service \
+        ${D}${systemd_system_unitdir}/live_stream.service
+}
+
+RDEPENDS:${PN} += " \
+    python3-core \
+    python3-logging \
+    python3-psutil \
+    python3-requests \
+    python3-dotenv \
+"
+
+FILES:${PN} += " \
+    /opt/telemetry-app \
+    ${systemd_system_unitdir}/telemetry-agent.service \
+    ${systemd_system_unitdir}/footage-recorder.service \
+    ${systemd_system_unitdir}/live_stream.service \
+"
