@@ -15,6 +15,7 @@ SRC_URI = " \
     file://sender.py \
     file://start-jetson.sh \
     file://telemetry-agent.service \
+    file://telemetry-app.service \
 "
 
 S = "${WORKDIR}"
@@ -27,6 +28,7 @@ SYSTEMD_SERVICE:${PN} = " \
     telemetry-agent.service \
     footage-recorder.service \
     live_stream.service \
+    telemetry-app.service \
 "
 
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
@@ -111,6 +113,9 @@ do_install() {
 
     install -m 0644 ${WORKDIR}/live_stream.service \
         ${D}${systemd_system_unitdir}/live_stream.service
+
+    install -m 0644 ${WORKDIR}/telemetry-app.service \
+    ${D}${systemd_system_unitdir}/telemetry-app.service
 }
 
 RDEPENDS:${PN} += " \
@@ -126,4 +131,5 @@ FILES:${PN} += " \
     ${systemd_system_unitdir}/telemetry-agent.service \
     ${systemd_system_unitdir}/footage-recorder.service \
     ${systemd_system_unitdir}/live_stream.service \
+    ${systemd_system_unitdir}/telemetry-app.service \
 "

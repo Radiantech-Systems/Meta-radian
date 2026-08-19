@@ -8,17 +8,21 @@ SRC_URI = " \
     file://videoserver.py \
     file://src/ \
     file://include/ \
+    file://video-recorder.service \
+    file://video-server.service \
 "
 
 S = "${WORKDIR}"
 
-inherit autotools pkgconfig
+inherit autotools pkgconfig systemd
 
 DEPENDS = ""
 
 RDEPENDS:${PN} = " \
     gstreamer1.0 \
     python3-core \
+    python3-flask \
+    python3-flask-cors \
 "
 
 FILES:${PN} += " \
@@ -40,4 +44,18 @@ do_install() {
     # Create application directories
     install -d ${D}/root/video_recorder/recordings
     install -d ${D}/root/video_recorder/logs
+
+    # Create systemd directory
+    install -d ${D}${systemd_system_unitdir}
+
+    # Install video recorder service
+    install -m 0644 ${WORKDIR}/video-recorder.service \
+        ${D}${systemd_system_unitdir}/video-recorder.service
+
+    # Install Flask video server service
+    install -m 0644 ${WORKDIR}/video-server.service \
+        ${D}${systemd_system_unitdir}/video-server.service
 }
+
+SYSTEMD_SERVICE:${PN} = "video-recorder.service video-server.service"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"

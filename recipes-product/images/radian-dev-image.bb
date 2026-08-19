@@ -12,4 +12,5 @@ IMAGE_INSTALL:append = " \
     packagegroup-radian-gui \
     packagegroup-radian-system \
     packagegroup-radian-apps \
+    ffmpeg \
 "

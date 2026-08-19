@@ -1,0 +1,12 @@
+[Unit]
+Description=Radian Temperature Monitor
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/temp_monitor
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

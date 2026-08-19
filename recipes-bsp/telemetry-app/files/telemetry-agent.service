@@ -10,6 +10,7 @@
 Description=Jetson Telemetry Agent
 After=network-online.target
 Wants=network-online.target
+PartOf=telemetry-app.service
 
 [Service]
 Type=simple

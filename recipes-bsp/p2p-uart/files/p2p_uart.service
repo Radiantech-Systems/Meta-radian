@@ -1,0 +1,11 @@
+[Unit]
+Description=Radian P2P UART Test
+After=dev-ttyTHS1.device dev-ttyTHS2.device
+Requires=dev-ttyTHS1.device dev-ttyTHS2.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/p2p_uart
+
+[Install]
+WantedBy=multi-user.target

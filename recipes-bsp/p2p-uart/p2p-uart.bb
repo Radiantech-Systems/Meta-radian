@@ -1,4 +1,3 @@
-SUMMARY = "Jetson UART Applications"
 DESCRIPTION = "Jetson UART P2P application and boot/shutdown notification service"
 LICENSE = "MIT"
 
@@ -9,13 +8,19 @@ SRC_URI = " \
     file://uart_notify.c \
     file://boot-uart.service \
     file://shutdown-uart.service \
+    file://p2p_uart.service \
 "
 
 S = "${WORKDIR}"
 
 inherit systemd
 
-SYSTEMD_SERVICE:${PN} = "boot-uart.service shutdown-uart.service"
+SYSTEMD_SERVICE:${PN} = " \
+    boot-uart.service \
+    shutdown-uart.service \
+    p2p_uart.service \
+"
+
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 do_compile() {
@@ -25,11 +30,13 @@ do_compile() {
 }
 
 do_install() {
+    # Install P2P UART applications
     install -d ${D}${bindir}
 
     install -m 0755 p2p_uart ${D}${bindir}/p2p_uart
     install -m 0755 uart_notify ${D}${bindir}/uart_notify
 
+    # Install systemd services
     install -d ${D}${systemd_system_unitdir}
 
     install -m 0644 ${WORKDIR}/boot-uart.service \
@@ -37,4 +44,7 @@ do_install() {
 
     install -m 0644 ${WORKDIR}/shutdown-uart.service \
         ${D}${systemd_system_unitdir}/shutdown-uart.service
+
+    install -m 0644 ${WORKDIR}/p2p_uart.service \
+        ${D}${systemd_system_unitdir}/p2p_uart.service
 }

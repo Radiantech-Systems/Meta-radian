@@ -1,0 +1,13 @@
+[Unit]
+Description=Radian Heartbeat Service
+After=dev-ttyTHS1.device
+Requires=dev-ttyTHS1.device
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/heartbeat
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
