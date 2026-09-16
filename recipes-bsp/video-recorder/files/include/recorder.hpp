@@ -13,6 +13,10 @@ public:
     std::string buildPipeline();
 
     void start();
+
+private:
+    void cleanupOldVideos();
 };
 
 #endif
+

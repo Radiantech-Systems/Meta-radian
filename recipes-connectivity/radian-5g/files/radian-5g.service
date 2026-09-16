@@ -1,0 +1,13 @@
+[Unit]
+Description=Radian RM520N 5G Connection
+After=ModemManager.service
+Wants=ModemManager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/radian-5g-connect.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

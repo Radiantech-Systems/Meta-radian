@@ -1,0 +1,37 @@
+###############################################
+# MediaMTX configuration
+# Direct CCTV RTSP -> HLS/WebRTC
+###############################################
+
+# HLS output
+hls: true
+hlsAddress: :8888
+hlsAllowOrigins: ["*"]
+hlsVariant: lowLatency
+hlsSegmentDuration: 1s
+hlsPartDuration: 200ms
+hlsSegmentMaxSize: 50M
+
+# WebRTC output
+webrtc: true
+webrtcAddress: :8889
+
+# MediaMTX is only consuming the CCTV RTSP stream.
+# It does not need to provide an RTSP server.
+rtsp: false
+
+paths:
+
+  front_gate:
+    source: rtsp://admin:Radian-123@192.168.1.250:554/video/live?channel=1&subtype=0
+    sourceOnDemand: true
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 3s
+    rtspTransport: tcp
+
+  front_gate_ai:
+    source: rtsp://192.168.1.155:8554/ds-test
+    sourceOnDemand: true
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 3s
+    rtspTransport: tcp

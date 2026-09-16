@@ -16,6 +16,9 @@ SRC_URI = " \
     file://start-jetson.sh \
     file://telemetry-agent.service \
     file://telemetry-app.service \
+    file://mediamtx \
+    file://mediamtx.yml \
+    file://mediamtx.service \
 "
 
 S = "${WORKDIR}"
@@ -29,7 +32,8 @@ SYSTEMD_SERVICE:${PN} = " \
     footage-recorder.service \
     live_stream.service \
     telemetry-app.service \
-"
+    mediamtx.service \
+" 
 
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
@@ -61,6 +65,21 @@ do_install() {
 
     install -m 0644 ${WORKDIR}/requirements.txt \
         ${D}/opt/telemetry-app/requirements.txt
+
+    # Systemd services directory
+    install -d ${D}${systemd_system_unitdir}
+
+    # MediaMTX live streaming
+    install -d ${D}/usr/bin
+    install -m 0755 ${WORKDIR}/mediamtx \
+        ${D}/usr/bin/mediamtx
+
+    install -d ${D}/etc
+    install -m 0644 ${WORKDIR}/mediamtx.yml \
+        ${D}/etc/mediamtx.yml
+
+    install -m 0644 ${WORKDIR}/mediamtx.service \
+        ${D}${systemd_system_unitdir}/mediamtx.service
 
     # Collectors
     install -d ${D}/opt/telemetry-app/collectors
@@ -103,7 +122,6 @@ do_install() {
         ${D}/opt/telemetry-app/collectors/stm32.py
 
     # Systemd services
-    install -d ${D}${systemd_system_unitdir}
 
     install -m 0644 ${WORKDIR}/telemetry-agent.service \
         ${D}${systemd_system_unitdir}/telemetry-agent.service
@@ -128,8 +146,11 @@ RDEPENDS:${PN} += " \
 
 FILES:${PN} += " \
     /opt/telemetry-app \
+    /usr/bin/mediamtx \
+    /etc/mediamtx.yml \
     ${systemd_system_unitdir}/telemetry-agent.service \
     ${systemd_system_unitdir}/footage-recorder.service \
     ${systemd_system_unitdir}/live_stream.service \
     ${systemd_system_unitdir}/telemetry-app.service \
+    ${systemd_system_unitdir}/mediamtx.service \
 "

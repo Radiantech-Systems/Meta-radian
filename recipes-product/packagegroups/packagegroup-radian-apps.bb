@@ -9,4 +9,5 @@ RDEPENDS:${PN} = " \
     temp-monitor \
     video-recorder \
     telemetry-app \
+    object-detector \
 "

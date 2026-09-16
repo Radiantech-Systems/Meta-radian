@@ -13,4 +13,7 @@ IMAGE_INSTALL:append = " \
     packagegroup-radian-system \
     packagegroup-radian-apps \
     ffmpeg \
+    kernel-modules \
+    modemmanager \
+    radian-5g \
 "

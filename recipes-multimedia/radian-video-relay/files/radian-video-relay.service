@@ -1,0 +1,17 @@
+[Unit]
+Description=Radian Video Relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/radian-video-relay /etc/radian-video-relay/config.conf
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/root/video_recorder/recordings
+
+[Install]
+WantedBy=multi-user.target

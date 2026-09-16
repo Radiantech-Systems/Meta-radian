@@ -5,7 +5,7 @@ Config ConfigLoader::load(const std::string&)
     Config cfg;
 
     cfg.rtspUrl =
-    "rtsp://192.168.1.20:8554/test";
+    "rtsp://admin:Radian-123@192.168.1.250:554/video/live?channel=1&subtype=0";
     cfg.recordingDirectory = "/root/video_recorder/recordings";
 
     cfg.logDirectory = "/root/video_recorder/logs";

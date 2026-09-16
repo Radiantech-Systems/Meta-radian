@@ -1,0 +1,13 @@
+[Unit]
+Description=MediaMTX RTSP to HLS Streaming Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mediamtx /etc/mediamtx.yml
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
