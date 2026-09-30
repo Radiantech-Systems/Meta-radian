@@ -1,0 +1,9 @@
+{
+    "interface": "eth0",
+    "lease_file": "/var/lib/misc/dnsmasq.leases",
+    "rtsp_template": "rtsp://admin:Radian-123@{ip}:554/video/live?channel=1&subtype=0",
+    "scan_interval": 10,
+    "ffprobe_timeout": 10,
+    "output_file": "/var/lib/camera-discovery/cameras.json",
+    "device_registry": "/var/lib/camera-discovery/devices.json"
+}

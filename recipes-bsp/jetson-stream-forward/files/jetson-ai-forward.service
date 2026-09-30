@@ -1,0 +1,25 @@
+[Unit]
+Description=Jetson AI RTSP Forwarding to AWS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+ExecStart=/usr/bin/ffmpeg \
+    -rtsp_transport tcp \
+    -i rtsp://172.16.2.193:8554/ds-test \
+    -map 0:v:0 \
+    -c:v copy \
+    -an \
+    -rtbufsize 64M \
+    -use_wallclock_as_timestamps 1 \
+    -f rtsp \
+    -rtsp_transport tcp \
+    rtsp://radiantech-dashboard.radiantechsys.com:8554/jetson1_ai
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

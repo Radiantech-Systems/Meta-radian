@@ -5,8 +5,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-VIDEO_ROOT = "/root/video_recorder/events/videos"
-
+VIDEO_ROOT = "/root/video_recorder/recordings"
 
 @app.route("/")
 def home():

@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch CCTV Camera Discovery JSON for RAW Stream Changes
+After=camera-discovery.service
+Requires=camera-discovery.service
+
+[Path]
+PathChanged=/var/lib/camera-discovery/cameras.json
+Unit=jetson-raw-forward.service
+
+[Install]
+WantedBy=multi-user.target

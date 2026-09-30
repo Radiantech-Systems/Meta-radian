@@ -1,0 +1,14 @@
+[Unit]
+Description=Radian Camera Discovery
+After=network-online.target dnsmasq.service
+Wants=network-online.target
+Requires=dnsmasq.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/bin/camera_discovery.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

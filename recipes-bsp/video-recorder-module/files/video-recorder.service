@@ -1,0 +1,13 @@
+[Unit]
+Description=Radian Video Recorder
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/video-recorder
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

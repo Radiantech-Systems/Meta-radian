@@ -1,0 +1,16 @@
+[Unit]
+Description=Jetson CCTV Raw RTSP Forwarding to AWS
+After=network-online.target camera-discovery.service
+Wants=network-online.target
+Requires=camera-discovery.service
+
+[Service]
+Type=simple
+
+ExecStart=/usr/bin/raw-stream-forward.sh
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

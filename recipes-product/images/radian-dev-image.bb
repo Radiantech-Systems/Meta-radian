@@ -16,4 +16,10 @@ IMAGE_INSTALL:append = " \
     kernel-modules \
     modemmanager \
     radian-5g \
+    dnsmasq \
+    dnf \
+    radian-cctv-dhcp \
+    cctv-network \
+    radian-camera-discovery \
+    jetson-stream-forward \
 "

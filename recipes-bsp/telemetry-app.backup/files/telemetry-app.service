@@ -1,0 +1,13 @@
+[Unit]
+Description=Radian Telemetry Application
+Requires=telemetry-agent.service footage-recorder.service live_stream.service
+After=network-online.target telemetry-agent.service footage-recorder.service live_stream.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

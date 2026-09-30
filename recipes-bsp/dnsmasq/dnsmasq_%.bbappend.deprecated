@@ -1,0 +1,9 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI += "file://cctv-dhcp.conf"
+
+do_install:append() {
+    install -d ${D}${sysconfdir}/dnsmasq.d
+    install -m 0644 ${WORKDIR}/cctv-dhcp.conf \
+        ${D}${sysconfdir}/dnsmasq.d/cctv-dhcp.conf
+}

@@ -1,0 +1,25 @@
+# systemd unit to run the agent automatically on Jetson boot.
+# All three Jetson services (telemetry-agent, footage-recorder,
+# live-stream) live in the SAME folder and share one .env — see
+# start-jetson.sh for a one-command way to install/start all three.
+# Install:
+#   sudo cp telemetry-agent.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now telemetry-agent
+[Unit]
+Description=Jetson Telemetry Agent
+After=network-online.target
+Wants=network-online.target
+PartOf=telemetry-app.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/telemetry-app
+EnvironmentFile=/opt/telemetry-app/.env
+ExecStart=/usr/bin/python3 /opt/telemetry-app/agent.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

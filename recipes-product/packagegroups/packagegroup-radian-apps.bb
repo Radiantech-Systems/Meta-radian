@@ -7,7 +7,7 @@ inherit packagegroup
 RDEPENDS:${PN} = " \
     heartbeat \
     temp-monitor \
-    video-recorder \
-    telemetry-app \
-    object-detector \
+    radian-video-recorder \
+    radian-telemetry-app \
+    radian-object-detector \
 "
